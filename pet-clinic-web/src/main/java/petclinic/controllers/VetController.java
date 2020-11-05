@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class VetController {
 
     @GetMapping({"","/","/index","/index.html"})
-    public String listVets(){
+    public String listVets() {
         return "vets/index";
     }
 }
