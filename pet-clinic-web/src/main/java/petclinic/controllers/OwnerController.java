@@ -1,12 +1,19 @@
 package petclinic.controllers;
 
+import com.springpetclinic.pet.model.Owner;
 import com.springpetclinic.pet.services.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/owners")
@@ -18,17 +25,46 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping({"","/","/index","/index.html"})
-    public String listOwners(Model model){
 
-
-        model.addAttribute("owners", ownerService.findAll());
-        return "owners/index";
+    //additional control over binding objects, how we handle post
+    @InitBinder
+    public void setAllowedFields(WebDataBinder dataBinder){
+        dataBinder.setDisallowedFields("id");
     }
 
+//    @GetMapping({"","/","/index","/index.html"})
+//    public String listOwners(Model model){
+//
+//
+//        model.addAttribute("owners", ownerService.findAll());
+//        return "owners/index";
+//    }
+
     @GetMapping("/find")
-    public String findOWner(){
-        return "notimplemented";
+    public String findOWner(Model model){
+        model.addAttribute("owner", Owner.builder());
+        return "owners/findOwners";
+    }
+
+    @GetMapping("/owners")
+    public String processFindForm(Owner owner, BindingResult result, Model model){
+        if(owner.getLastName()==null){
+            owner.setLastName("");
+        }
+
+        List<Owner> results = ownerService.findAllByLastNameLike(owner.getLastName());
+
+        if(results.isEmpty()){
+            result.rejectValue("lastName", " notFound", "not found");
+            return "/owners/findOwners";
+        }else if(results.size()==1){
+            owner =results.iterator().next();
+            return "redirect:/owners/"+owner.getId();
+        }else{
+            model.addAttribute("selections",results);
+            return "owners/ownersList";
+        }
+
     }
 
 
