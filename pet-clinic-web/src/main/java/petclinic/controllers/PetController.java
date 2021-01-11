@@ -1,17 +1,16 @@
 package petclinic.controllers;
 
 import com.springpetclinic.pet.model.Owner;
+import com.springpetclinic.pet.model.Pet;
 import com.springpetclinic.pet.model.PetType;
 import com.springpetclinic.pet.services.OwnerService;
 import com.springpetclinic.pet.services.PetService;
 import com.springpetclinic.pet.services.PetTypeService;
 import com.springpetclinic.pet.services.springdatajpa.PetTypeSDJpaService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -45,6 +44,16 @@ public class PetController {
     public void initOwnerBinder(WebDataBinder dataBinder){
         dataBinder.setDisallowedFields("id");
     }
+
+    @GetMapping("pets/new")
+    public String initCreationForm(Owner owner, Model model){
+        Pet pet = new Pet();
+        owner.getPets().add(pet);
+        model.addAttribute("pet",pet);
+        return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+
+    }
+
 }
 
 
