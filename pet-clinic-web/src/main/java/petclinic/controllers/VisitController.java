@@ -2,8 +2,6 @@ package petclinic.controllers;
 
 import com.springpetclinic.pet.model.Pet;
 import com.springpetclinic.pet.model.Visit;
-import com.springpetclinic.pet.repositories.PetRepository;
-import com.springpetclinic.pet.repositories.VisitRepository;
 import com.springpetclinic.pet.services.PetService;
 import com.springpetclinic.pet.services.VisitService;
 import org.springframework.stereotype.Controller;
