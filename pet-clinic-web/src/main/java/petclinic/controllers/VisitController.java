@@ -36,6 +36,7 @@ public class VisitController {
             public void setAsText(String text) throws IllegalArgumentException{
                 setValue(LocalDate.parse(text));
             }
+            
         });
 
     }
