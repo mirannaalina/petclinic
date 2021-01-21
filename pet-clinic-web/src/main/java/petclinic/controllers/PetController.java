@@ -6,7 +6,6 @@ import com.springpetclinic.pet.model.PetType;
 import com.springpetclinic.pet.services.OwnerService;
 import com.springpetclinic.pet.services.PetService;
 import com.springpetclinic.pet.services.PetTypeService;
-import com.springpetclinic.pet.services.springdatajpa.PetTypeSDJpaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
